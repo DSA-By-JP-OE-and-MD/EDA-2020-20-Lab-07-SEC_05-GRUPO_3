@@ -23,6 +23,9 @@
 import sys
 import config
 from DISClib.ADT import list as lt
+from DISClib.DataStructures import arraylistiterator as it
+from DISClib.ADT import orderedmap as om
+from DISClib.ADT import map as m
 from App import controller
 assert config
 
@@ -32,13 +35,19 @@ Presenta el menu de opciones  y  por cada seleccion
 hace la solicitud al controlador para ejecutar la
 operación seleccionada.
 """
+def impresor_de_datos_elefante_de_batalla_psiquico_ancestral(lista):
+    A = it.newIterator(lista)
+    while it.hasNext(A):
+        B = it.next(A)
+        print(B)
+        print("🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞")
 
 # ___________________________________________________
 #  Ruta a los archivos
 # ___________________________________________________
 
 
-crimefile = 'crime-utf8.csv'
+crimefile = "us_accidents_small.csv"
 
 # ___________________________________________________
 #  Menu principal
@@ -66,15 +75,21 @@ while True:
 
     if int(inputs[0]) == 1:
         print("\nInicializando....")
-        # cont es el controlador que se usará de acá en adelante
-        cont = controller.init()
+        # analyzer es el controlador que se usará de acá en adelante
+        analyzer = controller.init()
+        print("\nAnalizador cargado.")
 
     elif int(inputs[0]) == 2:
         print("\nCargando información de crimenes ....")
+        controller.loadData(analyzer, crimefile)
+        print("\nInformacion caragada exitosamente")
+        print("Se cargaron",m.size(analyzer["crimenes"]),"elementos.")
+
 
     elif int(inputs[0]) == 3:
-        print("\nBuscando crimenes en un rango de fechas: ")
-
+        criterio = input(str("\nBuscando crimenes en un rango de fechas: "))
+        Monika = controller.obtener_crimenes_por_fecha(analyzer, criterio)
+        impresor_de_datos_elefante_de_batalla_psiquico_ancestral(Monika)
 
     elif int(inputs[0]) == 4:
         print("\nRequerimiento No 1 del reto 3: ")
