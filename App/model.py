@@ -24,6 +24,7 @@ from DISClib.ADT import list as lt
 from DISClib.ADT import orderedmap as om
 from DISClib.DataStructures import mapentry as me
 from DISClib.ADT import map as m
+from DISClib.DataStructures import listiterator as it
 import datetime
 assert config
 
@@ -124,7 +125,14 @@ def maxKey(analyzer):
     return om.maxKey(analyzer['dateIndex'])
 
 def getAccidentsByDate(analyzer, date):
-    return om.get(analyzer, date)
+    lstfecha = lt.newList("SINGLE_LINKED")
+    fecha = om.get(analyzer, date)
+    lstaccidentes = me.getValue(fecha)
+    ite = it.newIterator(lstaccidentes)
+    while it.hasNext(ite):
+        n = it.next(ite)
+        lt.addLast(lstfecha, n)
+    return lstfecha
 
 
 # ==============================
