@@ -101,5 +101,6 @@ def maxKey(analyzer):
     return model.maxKey(analyzer)
 
 def getAccidentsByDate(analyzer, date):
-    date = datetime.datetime.strptime(date, '%Y-%m-%d')
+    fecha = datetime.datetime.strptime(date, '%Y-%m-%d')
+    date = fecha.date()
     return model.getAccidentsByDate(analyzer, date)

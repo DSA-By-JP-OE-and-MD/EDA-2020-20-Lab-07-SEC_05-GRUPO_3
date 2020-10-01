@@ -126,7 +126,7 @@ def maxKey(analyzer):
 
 def getAccidentsByDate(analyzer, date):
     lstfecha = lt.newList("SINGLE_LINKED")
-    fecha = om.get(analyzer, date)
+    fecha = om.get(analyzer["dateIndex"], date)
     lstaccidentes = me.getValue(fecha)
     ite = it.newIterator(lstaccidentes)
     while it.hasNext(ite):

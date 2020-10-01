@@ -82,7 +82,7 @@ while True:
         print("\nBuscando accidentes en una fecha: ")
         date = input("Inserte una fecha (YYYY-MM-DD): ")
         lst = controller.getAccidentsByDate(cont, date)
-        print("\nTotal de llaves en el rango: " + str(lt.size(lst)))
+        print("\nTotal de accidentes en la fecha indicada: " + str(lt.size(lst)))
 
 
     elif int(inputs[0]) == 4:
