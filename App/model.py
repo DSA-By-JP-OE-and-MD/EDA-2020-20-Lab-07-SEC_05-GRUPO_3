@@ -48,7 +48,7 @@ def analyzer():
                                  loadfactor=1.0, 
                                  comparefunction=comparer)
     
-    analyzer["index"] = om.newMap(omaptype="BST",
+    analyzer["index"] = om.newMap(omaptype="RBT",
                                   comparefunction=compareDates)
     return analyzer
 # -----------------------------------------------------
