@@ -99,3 +99,7 @@ def maxKey(analyzer):
     La mayor llave del arbol
     """
     return model.maxKey(analyzer)
+
+def getAccidentsByDate(analyzer, date):
+    date = datetime.datetime.strptime(date, '%Y-%m-%d')
+    return model.getAccidentsByDate(analyzer, date)

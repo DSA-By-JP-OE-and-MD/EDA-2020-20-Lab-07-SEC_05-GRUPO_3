@@ -111,21 +111,21 @@ def newDateEntry(crime):
 def accidentsSize(analyzer):
     return lt.size(analyzer['accidents'])
 
-
 def indexHeight(analyzer):
     return om.height(analyzer['dateIndex'])
-
 
 def indexSize(analyzer):
     return om.size(analyzer['dateIndex'])
 
-
 def minKey(analyzer):
     return om.minKey(analyzer['dateIndex'])
 
-
 def maxKey(analyzer):
     return om.maxKey(analyzer['dateIndex'])
+
+def getAccidentsByDate(analyzer, date):
+    return om.get(analyzer, date)
+
 
 # ==============================
 # Funciones de Comparacion
