@@ -94,7 +94,17 @@ def addDateIndex(datentry, accident):
     el valor es una lista con los crimenes de dicho tipo en la fecha que
     se está consultando (dada por el nodo del arbol)
     """
-    lt.addLast(datentry, accident)
+    lst = datentry['lstaccidents']
+    lt.addLast(lst, accident)
+    severityIndex = datentry['severityIndex']
+    seventry = m.get(severityIndex, accident['Severity'])
+    if (seventry is None):
+        entry = newSeverityEntry(accident['Severity'], accident)
+        lt.addLast(entry['lstaccidents'], accident)
+        m.put(severityIndex, accident['Severity'], entry)
+    else:
+        entry = me.getValue(seventry)
+        lt.addLast(entry['lstaccidents'], accident)
     return datentry
 
 def newDateEntry(crime):
@@ -102,8 +112,22 @@ def newDateEntry(crime):
     Crea una entrada en el indice por fechas, es decir en el arbol
     binario.
     """
-    entry = lt.newList('SINGLE_LINKED', compareDates)
+    entry = {'severityIndex': None, 'lstaccidents': None}
+    entry['severityIndex'] = m.newMap(numelements=30,
+                                      maptype='PROBING',
+                                      comparefunction=compareSeverity)
+    entry['lstaccidents'] = lt.newList('SINGLE_LINKED', compareDates)
     return entry
+
+def newSeverityEntry(sevnum, accident):
+    """
+    Crea una entrada en el indice por tipo de crimen, es decir en
+    la tabla de hash, que se encuentra en cada nodo del arbol.
+    """
+    seventry = {'severity': None, 'lstaccidents': None}
+    seventry['severity'] = sevnum
+    seventry['lstaccidents'] = lt.newList('SINGLELINKED', compareSeverity)
+    return seventry
 
 # ==============================
 # Funciones de consulta
@@ -124,15 +148,14 @@ def minKey(analyzer):
 def maxKey(analyzer):
     return om.maxKey(analyzer['dateIndex'])
 
-def getAccidentsByDate(analyzer, date):
-    lstfecha = lt.newList("SINGLE_LINKED")
+def getAccidentsByDate(analyzer, date, severity):
     fecha = om.get(analyzer["dateIndex"], date)
-    lstaccidentes = me.getValue(fecha)
-    ite = it.newIterator(lstaccidentes)
-    while it.hasNext(ite):
-        n = it.next(ite)
-        lt.addLast(lstfecha, n)
-    return lstfecha
+    if fecha['key'] is not None:
+        severitymap = me.getValue(fecha)['severityIndex']
+        numsevaccidents = m.get(severitymap, severity)
+        if numsevaccidents is not None:
+            return m.size(me.getValue(numsevaccidents)['lstaccidents'])
+        return 0
 
 
 # ==============================
@@ -150,7 +173,6 @@ def compareIds(id1, id2):
     else:
         return -1
 
-
 def compareDates(date1, date2):
     """
     Compara dos ids de libros, id es un identificador
@@ -159,6 +181,19 @@ def compareDates(date1, date2):
     if (date1 == date2):
         return 0
     elif (date1 > date2):
+        return 1
+    else:
+        return -1
+
+def compareSeverity(sev1, sev2):
+    """
+    Compara dos ids de libros, id es un identificador
+    y entry una pareja llave-valor
+    """
+    sev = me.getKey(sev2)
+    if (sev1 == sev):
+        return 0
+    elif (sev1 > sev):
         return 1
     else:
         return -1

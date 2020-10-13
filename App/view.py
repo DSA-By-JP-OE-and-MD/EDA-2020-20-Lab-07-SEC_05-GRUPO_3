@@ -79,10 +79,12 @@ while True:
         print('Mayor Llave: ' + str(controller.maxKey(cont)))
 
     elif int(inputs[0]) == 3:
-        print("\nBuscando accidentes en una fecha: ")
-        date = input("Inserte una fecha (YYYY-MM-DD): ")
-        lst = controller.getAccidentsByDate(cont, date)
-        print("\nTotal de accidentes en la fecha indicada: " + str(lt.size(lst)))
+        print("\nBuscando accidentes por severidad en una fecha: ")
+        date = input("Fecha (YYYY-MM-DD): ")
+        severity = input("Número de severidad del accidente (1, 2, 3 o 4): ")
+        numsevaccidents = controller.getAccidentsByDate(cont, date, severity)
+        print("\nTotal de accidentes de severidad " + severity + " en la fecha: " +
+              str(numsevaccidents))
 
 
     elif int(inputs[0]) == 4:
