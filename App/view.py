@@ -26,8 +26,6 @@ from DISClib.ADT import list as lt
 from DISClib.DataStructures import arraylistiterator as it
 from DISClib.ADT import orderedmap as om
 from DISClib.ADT import map as m
-from App import controller
-assert config
 
 """
 La vista se encarga de la interacción con el usuario.
@@ -86,10 +84,12 @@ while True:
         print("Se cargaron",m.size(analyzer["crimenes"]),"elementos.")
 
 
+
     elif int(inputs[0]) == 3:
         criterio = input(str("\nBuscando crimenes en un rango de fechas: "))
         Monika = controller.obtener_crimenes_por_fecha(analyzer, criterio)
         impresor_de_datos_elefante_de_batalla_psiquico_ancestral(Monika)
+
 
     elif int(inputs[0]) == 4:
         print("\nRequerimiento No 1 del reto 3: ")
