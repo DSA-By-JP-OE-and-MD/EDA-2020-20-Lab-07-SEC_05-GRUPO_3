@@ -1,0 +1,16 @@
+Pregunta 1:  Qué diferencia existe entre las alturas de los dos árboles (BST y RBT) por qué pasa esto?
+La diferencia es clara pues el árbol rojo-negro ordena los datos por su tamaño, mientras que el binario por defecto, no, generando un arbol que solo se completa hacia la izquierda.
+Pregunta 2: ¿Cuántos elementos tiene el árbol (size)?  ¿Qué altura tiene el árbol (height)?
+_______________________________________________________________________________________________________________________________________________________________________________________________________________________________________
+
+Pregunta 3:  Qué tan difícil fue hacer el cambio de una estructura de datos por otra? ¿Cuántas líneas de código tuvieron que modificar para hacer el cambio?
+Fue supremamente fácil, solo fue necesario cambiar el tipo de mapa ordenado a “RBT”.
+
+Pregunta 4:  Cuántos elementos tiene el árbol? ¿Qué altura tiene el árbol? ¿Qué puede concluir sobre las alturas del árbol cuando se usa un BST y un RBT?
+_Los árboles BST, no usan algoritmo alguno para organizar los elementos que se le implementan, lo que los convierte en una lista (prácticamente) y la búsqueda de datos puede ser ineficiente, mientras que un RBT ordena sus datos, aumentando la facilidad en la búsqueda de datos y su comparación.
+
+Pregunta 5:  Existe diferencia en el consumo de memoria? ¿Pueden hacer una relación entre el total de datos cargados y la memoria utilizada?
+_Pues solo intento cargar el archivo con el árbol RBT y se consume el 98% de mis 12 gb de ram y lleva más de 2 horas.
+
+
+-Students: Oscar Eduardo Martinez Acevedo o.martineza@uniandes.edu.co 202012599, Juan Pablo Martinez Pineda jp.martinezp1@uniandes.edu.co 202012623, Michael Dylan Blanquicett Carvajal m.blanquicett@uniandes.edu.co 202014156

@@ -47,7 +47,8 @@ def impresor_de_datos_elefante_de_batalla_psiquico_ancestral(lista):
 # ___________________________________________________
 
 
-crimefile = "us_accidents_small.csv"
+#crimefile = "us_accidents_small.csv"
+crimefile = "US_Accidents_Dec19.csv"
 
 # ___________________________________________________
 #  Menu principal
@@ -63,6 +64,7 @@ def printMenu():
     print("3- Requerimento 1")
     print("4- Requerimento 2")
     print("0- Salir")
+    
     print("*******************************************")
 
 
@@ -80,14 +82,15 @@ while True:
         print("\nAnalizador cargado.")
 
     elif int(inputs[0]) == 2:
-        print("\nCargando información de crimenes ....")
+        print("\nCargando información de accidentes ....")
         controller.loadData(analyzer, crimefile)
         print("\nInformacion caragada exitosamente")
         print("Se cargaron",m.size(analyzer["crimenes"]),"elementos.")
+        print("tamaño del arbol",om.height(analyzer["index"]))
 
 
     elif int(inputs[0]) == 3:
-        criterio = input(str("\nBuscando crimenes en un rango de fechas: "))
+        criterio = input(str("\nBuscando accidentes en un rango de fechas: "))
         Monika = controller.obtener_crimenes_por_fecha(analyzer, criterio)
         impresor_de_datos_elefante_de_batalla_psiquico_ancestral(Monika)
 
