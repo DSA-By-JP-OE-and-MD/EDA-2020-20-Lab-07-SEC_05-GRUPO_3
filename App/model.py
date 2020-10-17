@@ -40,9 +40,9 @@ es decir contiene los modelos con los datos en memoria
 # -----------------------------------------------------
 # API del TAD Catalogo de accidentes
 def analyzer():
-    analyzer = {"crimenes":None,
+    analyzer = {"accidentes":None,
                 "index":None}
-    analyzer["crimenes"] = m.newMap(numelements=999,
+    analyzer["accidentes"] = m.newMap(numelements=999,
                                  prime=109345121, 
                                  maptype="CHAINING", 
                                  loadfactor=1.0, 
@@ -53,11 +53,11 @@ def analyzer():
     return analyzer
 # -----------------------------------------------------
 def fecha_convertidor(dato):
-    crimedate = datetime.datetime.strptime(dato, '%Y-%m-%d %H:%M:%S')
-    return crimedate.date()
+    accidentdate = datetime.datetime.strptime(dato, '%Y-%m-%d %H:%M:%S')
+    return accidentdate.date()
 def fecha_convertidor_consultas(dato):
-    crimedate = datetime.datetime.strptime(dato, '%Y-%m-%d')
-    return crimedate.date()
+    accidentdate = datetime.datetime.strptime(dato, '%Y-%m-%d')
+    return accidentdate.date()
 
 def lessfunction(ele1, ele2):
     if int(ele1["Severity"]) < int(ele2["Severity"]):
@@ -66,15 +66,15 @@ def lessfunction(ele1, ele2):
 
 # Funciones para agregar informacion al catalogo
 
-def cargaridcrimen(analyzer, crimen):
-    listac = analyzer["crimenes"]
+def cargaridaccidente(analyzer, accidente):
+    listac = analyzer["accidentes"]
     index = analyzer["index"]
-    fecha = fecha_convertidor(crimen["Start_Time"])
-    m.put(listac, crimen["ID"], crimen)
+    fecha = fecha_convertidor(accidente["Start_Time"])
+    m.put(listac, accidente["ID"], accidente)
     if om.contains(index, fecha)==True:
-        agregarid(index, crimen, fecha)
+        agregarid(index, accidente, fecha)
     else:
-        agregarfecha(index, crimen, fecha) 
+        agregarfecha(index, accidente, fecha) 
 """
 def añadircrimen(analyzer, a):
     Monika = {ID
@@ -129,14 +129,14 @@ def añadircrimen(analyzer, a):
 }
     m.put(analyzer["crimenes"], crimen["ID"], Monika)
     """
-def agregarid(index, crimen, fecha):
+def agregarid(index, accidente, fecha):
     a = om.get(index, fecha)
     b = me.getValue(a)
-    lt.addLast(b, crimen["ID"])
+    lt.addLast(b, accidente["ID"])
 
-def agregarfecha(index, crimen, fecha):
+def agregarfecha(index, accidente, fecha):
     N = lt.newList(datastructure="ARRAY_LIST")
-    lt.addLast(N, crimen["ID"])
+    lt.addLast(N, accidente["ID"])
     om.put(index, fecha, N)
 
 # ==============================
@@ -150,7 +150,7 @@ def obtener_accidentes_en_una_fecha(analyzer, criterioa):
     c = it.newIterator(b)
     while it.hasNext(c):
         n = it.next(c)
-        A = m.get(analyzer["crimenes"], n)
+        A = m.get(analyzer["accidentes"], n)
         B = me.getValue(A)
         lt.addLast(d, B)
     ins.insertionSort(d, lessfunction)
