@@ -22,13 +22,10 @@
 
 import sys
 import config
-<<<<<<< HEAD
 from DISClib.ADT import list as lt
 from DISClib.DataStructures import arraylistiterator as it
 from DISClib.ADT import orderedmap as om
 from DISClib.ADT import map as m
-=======
->>>>>>> 7fb63ffd91d55098e9169ac19b48bd0f102427f9
 from App import controller
 assert config
 
@@ -50,8 +47,8 @@ def impresor_de_datos_elefante_de_batalla_psiquico_ancestral(lista):
 # ___________________________________________________
 
 
-#crimefile = "us_accidents_small.csv"
-crimefile = "US_Accidents_Dec19.csv"
+file = "us_accidents_small.csv"
+#file = "US_Accidents_Dec19.csv"
 
 # ___________________________________________________
 #  Menu principal
@@ -86,20 +83,15 @@ while True:
 
     elif int(inputs[0]) == 2:
         print("\nCargando información de accidentes ....")
-        controller.loadData(analyzer, crimefile)
+        controller.loadData(analyzer, file)
         print("\nInformacion caragada exitosamente")
-        print("Se cargaron",m.size(analyzer["crimenes"]),"elementos.")
+        print("Se cargaron",m.size(analyzer["accidentes"]),"elementos.")
         print("tamaño del arbol",om.height(analyzer["index"]))
 
-
-<<<<<<< HEAD
     elif int(inputs[0]) == 3:
         criterio = input(str("\nBuscando accidentes en un rango de fechas: "))
-        Monika = controller.obtener_crimenes_por_fecha(analyzer, criterio)
+        Monika = controller.obtener_accidentes_por_fecha(analyzer, criterio)
         impresor_de_datos_elefante_de_batalla_psiquico_ancestral(Monika)
-
-=======
->>>>>>> 7fb63ffd91d55098e9169ac19b48bd0f102427f9
     elif int(inputs[0]) == 4:
         print("\nRequerimiento No 1 del reto 3: ")
 

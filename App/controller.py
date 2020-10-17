@@ -51,21 +51,21 @@ def init():
 #  de datos en los modelos
 # ___________________________________________________
 
-def loadData(analyzer, crimesfile):
+def loadData(analyzer, file):
     """
     Carga los datos de los archivos CSV en el modelo
     """
-    crimesfile = cf.data_dir + crimesfile
-    input_file = csv.DictReader(open(crimesfile, encoding="utf-8"),
+    file = cf.data_dir + file
+    input_file = csv.DictReader(open(file, encoding="utf-8"),
                                 delimiter=",")
-    for crime in input_file:
-        model.cargaridcrimen(analyzer, crime)
+    for accidente in input_file:
+        model.cargaridaccidente(analyzer, accidente)
 
     return analyzer
 
 # ___________________________________________________
 #  Funciones para consultas
-def obtener_crimenes_por_fecha(analyzer, criterio):
+def obtener_accidentes_por_fecha(analyzer, criterio):
     A = model.obtener_accidentes_en_una_fecha(analyzer, criterio)
     return A
 # ___________________________________________________
