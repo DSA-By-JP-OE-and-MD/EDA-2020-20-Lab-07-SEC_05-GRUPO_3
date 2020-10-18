@@ -26,8 +26,11 @@ from DISClib.ADT import list as lt
 from DISClib.DataStructures import arraylistiterator as it
 from DISClib.ADT import orderedmap as om
 from DISClib.ADT import map as m
+<<<<<<< HEAD
 from App import controller
 assert config
+=======
+>>>>>>> 41579fca0a911aab0b756c74aa1d9c6360683480
 
 """
 La vista se encarga de la interacción con el usuario.
@@ -100,7 +103,7 @@ while True:
         Fecha2 = input("Fecha final:")
         A = controller.estado_y_fecha_con_mas_casos(analyzer, Fecha1, Fecha2)
         print(A)
-        
+
 
     else:
         sys.exit(0)
