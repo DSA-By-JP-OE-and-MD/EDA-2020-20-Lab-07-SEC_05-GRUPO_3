@@ -26,11 +26,8 @@ from DISClib.ADT import list as lt
 from DISClib.DataStructures import arraylistiterator as it
 from DISClib.ADT import orderedmap as om
 from DISClib.ADT import map as m
-<<<<<<< HEAD
 from App import controller
 assert config
-=======
->>>>>>> 41579fca0a911aab0b756c74aa1d9c6360683480
 
 """
 La vista se encarga de la interacción con el usuario.
@@ -42,7 +39,7 @@ def impresor_de_datos_elefante_de_batalla_psiquico_ancestral(lista):
     A = it.newIterator(lista)
     while it.hasNext(A):
         B = it.next(A)
-        print(B)
+        print(D)
         print("🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞")
 
 # ___________________________________________________
