@@ -68,6 +68,12 @@ def loadData(analyzer, file):
 def obtener_accidentes_por_fecha(analyzer, criterio):
     A = model.obtener_accidentes_en_una_fecha(analyzer, criterio)
     return A
+def estado_y_fecha_con_mas_casos(analyzer, fecha1, fecha2):
+    B = model.fecha_con_mas_casos(analyzer, fecha1, fecha2)
+    C = model.estado_con_mas_casos(analyzer, fecha1, fecha2)
+    A = {"Estado con más accidentes reportados:": C, 
+         "Fecha con más casos reportados:": B}
+    return A
 # ___________________________________________________
 
 

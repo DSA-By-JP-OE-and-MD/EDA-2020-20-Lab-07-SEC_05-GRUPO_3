@@ -21,10 +21,10 @@
  """
 import config
 from DISClib.ADT import list as lt
-from DISClib.DataStructures import listiterator as it
 from DISClib.ADT import orderedmap as om
 from DISClib.DataStructures import mapentry as me
 from DISClib.DataStructures import arraylistiterator as it
+from DISClib.DataStructures import linkedlistiterator as lit
 from DISClib.ADT import map as m
 from DISClib.Algorithms.Sorting import insertionsort as ins
 import datetime
@@ -76,60 +76,7 @@ def cargaridaccidente(analyzer, accidente):
         agregarid(index, accidente, fecha)
     else:
         agregarfecha(index, accidente, fecha) 
-"""
-def añadircrimen(analyzer, a):
-    Monika = {ID
-            "Source":a["Source"]
-            "TMC":a["TCM"]
-            "Severity":a["Severity"]
-            "Start_Time":a["Start_Time"]
-            "End_Time":a["End_Time"]
-            "Start_Lat":a["Start_Lat"]
-            "Start_Lng":a["Start_Lng"]
-            "End_Lat":a["End_Lat"]
-            "End_Lng":a["End_Lng"]
-            "Distance(mi)":a["Distance(mi)"]
-            "Description":a["Description"]
-            "Number":a["Number"]
-            "Street":a[" Street"]
-            Side
-            City
-            County
-            State
-            Zipcode
-            Country
-            Timezone
-            Airport_Code
-            Weather_Timestamp
-            Temperature(F)
-            Wind_Chill(F)
-            Humidity(%)
-            Pressure(in)
-            Visibility(mi)
-            Wind_Direction
-            Wind_Speed(mph)
-            Precipitation(in)
-            Weather_Condition
-            Amenity
-            Bump
-            Crossing
-            Give_Way
-            Junction
-            No_Exit
-            Railway
-            Roundabout
-            Station
-            Stop
-            Traffic_Calming
-            Traffic_Signal
-            Turning_Loop
-            Sunrise_Sunset
-            Civil_Twilight
-            Nautical_Twilight
-            Astronomical_Twilight
-}
-    m.put(analyzer["crimenes"], crimen["ID"], Monika)
-    """
+
 def agregarid(index, accidente, fecha):
     a = om.get(index, fecha)
     b = me.getValue(a)
@@ -156,7 +103,70 @@ def obtener_accidentes_en_una_fecha(analyzer, criterioa):
         lt.addLast(d, B)
     ins.insertionSort(d, lessfunction)
     return d
+def crear_lista_con_fechas(index, accidentes, fecha1, fecha2):
+    d = {}
+    A = om.values(index, fecha1, fecha2)
+    M = lit.newIterator(A)
+    while lit.hasNext(M):
+        L = lit.next(M)
+        N = it.newIterator(L)
+        while it.hasNext(N):
+            D = it.next(N)
+            R = m.get(accidentes, D)
+            K = me.getValue(R)
+            if fecha_convertidor(K["Start_Time"]) in d:
+                d[fecha_convertidor(K["Start_Time"])] += 1
+            else:
+                d[fecha_convertidor(K["Start_Time"])] = 1
+    return d
+
+def crear_lista_con_estados(index, accidentes, fecha1, fecha2):
+    d = {}
+    A = om.values(index, fecha1, fecha2)
+    M = lit.newIterator(A)
+    while lit.hasNext(M):
+        L = lit.next(M)
+        N = it.newIterator(L)
+        while it.hasNext(N):
+            D = it.next(N)
+            R = m.get(accidentes, D)
+            K = me.getValue(R)
+            if K["State"] in d:
+                d[K["State"]] += 1
+            else:
+                d[K["State"]] = 1
+    return d
+
+def fecha_con_mas_casos(analyzer, fecha1, fecha2):
+    index = analyzer["index"]
+    accidentes = analyzer["accidentes"]
+    fecha1 = fecha_convertidor_consultas(fecha1)
+    fecha2 = fecha_convertidor_consultas(fecha2)
+    A = crear_lista_con_fechas(index, accidentes, fecha1, fecha2)
+    contadorF = 0
+    mayorfecha = None
+    for a in A:
+        if A[a] > contadorF:
+            contadorF = A[a]
+            mayorfecha = a
+    return mayorfecha
+
+
+def estado_con_mas_casos(analyzer, fecha1, fecha2):
+    index = analyzer["index"]
+    accidentes = analyzer["accidentes"]
+    fecha1 = fecha_convertidor_consultas(fecha1)
+    fecha2 = fecha_convertidor_consultas(fecha2)
+    B = crear_lista_con_estados(index, accidentes, fecha1, fecha2)
+    mayorestado = None
+    contadorE = 0
+    for b in B:
+        if B[b] > contadorE:
+            contadorE = B[b]
+            mayorestado = b
+    return mayorestado
     
+
     
     
 

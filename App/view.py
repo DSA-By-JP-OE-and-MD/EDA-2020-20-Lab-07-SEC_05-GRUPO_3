@@ -63,6 +63,7 @@ def printMenu():
     print("2- Cargar información de accidentes")
     print("3- Requerimento 1")
     print("4- Requerimento 2")
+    print("6- Requerimento 4")
     print("0- Salir")
     
     print("*******************************************")
@@ -94,6 +95,12 @@ while True:
         impresor_de_datos_elefante_de_batalla_psiquico_ancestral(Monika)
     elif int(inputs[0]) == 4:
         print("\nRequerimiento No 1 del reto 3: ")
+    elif int(inputs[0]) == 6:
+        Fecha1 = input("Fecha inicial:")
+        Fecha2 = input("Fecha final:")
+        A = controller.estado_y_fecha_con_mas_casos(analyzer, Fecha1, Fecha2)
+        print(A)
+        
 
     else:
         sys.exit(0)
