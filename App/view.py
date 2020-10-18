@@ -39,7 +39,7 @@ def impresor_de_datos_elefante_de_batalla_psiquico_ancestral(lista):
     A = it.newIterator(lista)
     while it.hasNext(A):
         B = it.next(A)
-        print(D)
+        print(B)
         print("🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞🍞")
 
 # ___________________________________________________
