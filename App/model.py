@@ -157,6 +157,17 @@ def getAccidentsByDate(analyzer, date, severity):
             return m.size(me.getValue(numsevaccidents)['lstaccidents'])
         return 0
 
+def getAccidentsBefore(analyzer, date):
+    an = analyzer["dateIndex"]
+    num = om.values(an, om.minKey(an), om.floor(an, date))
+    total = 0
+    A = it.newIterator(num)
+    while it.hasNext(A):
+        B = it.next(A)
+        C = om.get(an, B)
+        D = me.getValue(C)
+        total += lt.size(D["lstaccidents"])
+    return total
 
 # ==============================
 # Funciones de Comparacion

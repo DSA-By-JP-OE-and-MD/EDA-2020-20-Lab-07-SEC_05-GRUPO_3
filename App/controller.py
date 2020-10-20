@@ -104,3 +104,8 @@ def getAccidentsByDate(analyzer, date, severity):
     fecha = datetime.datetime.strptime(date, '%Y-%m-%d')
     date = fecha.date()
     return model.getAccidentsByDate(analyzer, date, severity)
+
+def getAccidentsBefore(analyzer, date):
+    fecha = datetime.datetime.strptime(date, '%Y-%m-%d')
+    date = fecha.date()
+    return model.getAccidentsBefore(analyzer, date)

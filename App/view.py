@@ -38,7 +38,7 @@ operación seleccionada.
 # ___________________________________________________
 
 
-accidentsfile = 'us_accidents_dis_2016.csv'
+accidentsfile = 'us_accidents_small.csv'
 
 # ___________________________________________________
 #  Menu principal
@@ -88,7 +88,10 @@ while True:
 
 
     elif int(inputs[0]) == 4:
-        print("\nRequerimiento No 2 del reto 3: ")
+        print("\nBuscando accidentes antes de una fecha: ")
+        date = input("Fecha (YYYY-MM-DD): ")
+        numaccidents = controller.getAccidentsBefore(cont, date)
+        print("\nTotal de accidentes antes de "+ str(date) + ": " + str(numaccidents))
 
     else:
         sys.exit(0)
