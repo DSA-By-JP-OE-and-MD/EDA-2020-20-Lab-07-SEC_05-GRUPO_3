@@ -64,6 +64,7 @@ def printMenu():
     print("3- Requerimento 1")
     print("4- Requerimento 2")
     print("6- Requerimento 4")
+    print("7- Requerimento 5")
     print("0- Salir")
     
     print("*******************************************")
@@ -87,19 +88,30 @@ while True:
         controller.loadData(analyzer, file)
         print("\nInformacion caragada exitosamente")
         print("Se cargaron",m.size(analyzer["accidentes"]),"elementos.")
-        print("tamaño del arbol",om.height(analyzer["index"]))
-
+        print("altura del arbol fechas",om.height(analyzer["index"]))
+        print("elementos del arbol fechas",om.size(analyzer["index"]))
+        print("tamaño del arbol horas",om.height(analyzer["index_horas"]))
+        print("elementos del arbol horas",om.size(analyzer["index_horas"]))
     elif int(inputs[0]) == 3:
         criterio = input(str("\nBuscando accidentes en un rango de fechas: "))
         Monika = controller.obtener_accidentes_por_fecha(analyzer, criterio)
         impresor_de_datos_elefante_de_batalla_psiquico_ancestral(Monika)
+
     elif int(inputs[0]) == 4:
         print("\nRequerimiento No 1 del reto 3: ")
+
     elif int(inputs[0]) == 6:
         Fecha1 = input("Fecha inicial:")
         Fecha2 = input("Fecha final:")
         A = controller.estado_y_fecha_con_mas_casos(analyzer, Fecha1, Fecha2)
         print(A)
+
+    elif int(inputs[0]) == 7:
+        Hora1 = input("Hora inicial:")
+        Hora2 = input("Hora final:")
+        #A = controller.prueba(Hora1, Hora2)
+        A = controller.numero_de_accidentes_por_hora(analyzer, Hora1, Hora2)
+        print (A)
 
 
     else:

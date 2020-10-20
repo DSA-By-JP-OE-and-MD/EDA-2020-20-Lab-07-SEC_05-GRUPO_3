@@ -42,7 +42,8 @@ es decir contiene los modelos con los datos en memoria
 # API del TAD Catalogo de accidentes
 def analyzer():
     analyzer = {"accidentes":None,
-                "index":None}
+                "index":None,
+                "index_horas":None}
     analyzer["accidentes"] = m.newMap(numelements=999,
                                  prime=109345121, 
                                  maptype="CHAINING", 
@@ -51,6 +52,9 @@ def analyzer():
     
     analyzer["index"] = om.newMap(omaptype="RBT",
                                   comparefunction=compareDates)
+    
+    analyzer["index_horas"] = om.newMap(omaptype="RBT",
+                                  comparefunction=compareDatesPerHours)
     return analyzer
 # -----------------------------------------------------
 def fecha_convertidor(dato):
@@ -59,6 +63,29 @@ def fecha_convertidor(dato):
 def fecha_convertidor_consultas(dato):
     accidentdate = datetime.datetime.strptime(dato, '%Y-%m-%d')
     return accidentdate.date()
+def hora_convertidor(dato):
+    accidenthour = datetime.datetime.strptime(dato, "%Y-%m-%d %H:%M:%S")
+    return accidenthour.time()
+def hora_convertidor_consultas(dato):
+    accidenthour = datetime.datetime.strptime(dato, "%H:%M:%S")
+    return accidenthour.time()
+
+
+def redondear_horas(tiempo):
+    tiempo = tiempo.replace(second = 0)
+    minuto = tiempo.minute
+    h = tiempo.hour + 1
+    if minuto <= 15:
+        tiempo = tiempo.replace(minute= 0)
+    elif minuto > 15 and minuto <= 45:
+        tiempo = tiempo.replace(minute= 30)
+    elif minuto > 45 and minuto <= 59:
+        if h == 24:
+            h = 0
+        tiempo = tiempo.replace(hour= h) 
+        tiempo = tiempo.replace(minute= 0)
+    return tiempo
+
 
 def lessfunction(ele1, ele2):
     if int(ele1["Severity"]) < int(ele2["Severity"]):
@@ -70,15 +97,27 @@ def lessfunction(ele1, ele2):
 def cargaridaccidente(analyzer, accidente):
     listac = analyzer["accidentes"]
     index = analyzer["index"]
+    index_h = analyzer["index_horas"]
+    hora = hora_convertidor(accidente["Start_Time"])
     fecha = fecha_convertidor(accidente["Start_Time"])
     m.put(listac, accidente["ID"], accidente)
     if om.contains(index, fecha)==True:
         agregarid(index, accidente, fecha)
+    else: 
+        agregarfecha(index, accidente, fecha)
+    if om.contains(index_h, hora) == True:
+        agregaridh(index_h, accidente, hora)
     else:
-        agregarfecha(index, accidente, fecha) 
+        agregarh(index_h, accidente, hora) 
 
 def agregarid(index, accidente, fecha):
     a = om.get(index, fecha)
+    b = me.getValue(a)
+    lt.addLast(b, accidente["ID"])
+
+def agregaridh(index, accidente, hora):
+    hora_ll = redondear_horas(hora)
+    a = om.get(index, hora_ll)
     b = me.getValue(a)
     lt.addLast(b, accidente["ID"])
 
@@ -86,6 +125,12 @@ def agregarfecha(index, accidente, fecha):
     N = lt.newList(datastructure="ARRAY_LIST")
     lt.addLast(N, accidente["ID"])
     om.put(index, fecha, N)
+
+def agregarh(index, accidente, hora):
+    hora_ll = redondear_horas(hora)
+    N = lt.newList(datastructure="ARRAY_LIST")
+    lt.addLast(N, accidente["ID"])
+    om.put(index, hora_ll, N)
 
 # ==============================
 # Funciones de consulta
@@ -103,24 +148,8 @@ def obtener_accidentes_en_una_fecha(analyzer, criterioa):
         lt.addLast(d, B)
     ins.insertionSort(d, lessfunction)
     return d
-def crear_lista_con_fechas(index, accidentes, fecha1, fecha2):
-    d = {}
-    A = om.values(index, fecha1, fecha2)
-    M = lit.newIterator(A)
-    while lit.hasNext(M):
-        L = lit.next(M)
-        N = it.newIterator(L)
-        while it.hasNext(N):
-            D = it.next(N)
-            R = m.get(accidentes, D)
-            K = me.getValue(R)
-            if fecha_convertidor(K["Start_Time"]) in d:
-                d[fecha_convertidor(K["Start_Time"])] += 1
-            else:
-                d[fecha_convertidor(K["Start_Time"])] = 1
-    return d
 
-def crear_lista_con_estados(index, accidentes, fecha1, fecha2):
+def crear_lista_con_criterio(index, accidentes, criterio, fecha1, fecha2, es_fecha):
     d = {}
     A = om.values(index, fecha1, fecha2)
     M = lit.newIterator(A)
@@ -131,18 +160,26 @@ def crear_lista_con_estados(index, accidentes, fecha1, fecha2):
             D = it.next(N)
             R = m.get(accidentes, D)
             K = me.getValue(R)
-            if K["State"] in d:
-                d[K["State"]] += 1
+            if es_fecha == True:
+                if fecha_convertidor(K[criterio]) in d:
+                    d[fecha_convertidor(K[criterio])] += 1
+                else:
+                    d[fecha_convertidor(K[criterio])] = 1
             else:
-                d[K["State"]] = 1
+                if (K[criterio]) in d:
+                    d[(K[criterio])] += 1
+                else:
+                    d[(K[criterio])] = 1
+
     return d
 
 def fecha_con_mas_casos(analyzer, fecha1, fecha2):
+    es_fecha = True
     index = analyzer["index"]
     accidentes = analyzer["accidentes"]
     fecha1 = fecha_convertidor_consultas(fecha1)
     fecha2 = fecha_convertidor_consultas(fecha2)
-    A = crear_lista_con_fechas(index, accidentes, fecha1, fecha2)
+    A = crear_lista_con_criterio(index, accidentes, "Start_Time", fecha1, fecha2, es_fecha)
     contadorF = 0
     mayorfecha = None
     for a in A:
@@ -153,11 +190,12 @@ def fecha_con_mas_casos(analyzer, fecha1, fecha2):
 
 
 def estado_con_mas_casos(analyzer, fecha1, fecha2):
+    es_fecha = False
     index = analyzer["index"]
     accidentes = analyzer["accidentes"]
     fecha1 = fecha_convertidor_consultas(fecha1)
     fecha2 = fecha_convertidor_consultas(fecha2)
-    B = crear_lista_con_estados(index, accidentes, fecha1, fecha2)
+    B = crear_lista_con_criterio(index, accidentes, "State", fecha1, fecha2, es_fecha)
     mayorestado = None
     contadorE = 0
     for b in B:
@@ -165,9 +203,34 @@ def estado_con_mas_casos(analyzer, fecha1, fecha2):
             contadorE = B[b]
             mayorestado = b
     return mayorestado
+
+def numero_de_casos_por_rango_de_hora(analyzer, hora1, hora2):
+    es_fecha = False
+    index = analyzer["index_horas"]
+    accidentes = analyzer["accidentes"]
+    hora1 = hora_convertidor_consultas(hora1)
+    hora2 = hora_convertidor_consultas(hora2)
+    A = crear_lista_con_criterio(index, accidentes, "Severity", hora1, hora2, es_fecha)
+    total = 0
+    porc = {}
+    for a in A:
+        total += A[a]
+    porc["Total"] = total
+    for a in A:
+        porcentaje = round(A[a]/total * 100, 2)
+        porcentaje = str(porcentaje)+"%"
+        porc[a] = A[a]
+        porc["porcentaje"+a] = porcentaje
+    
+    return porc
+
+
     
 
     
+def prueba(hora1, hora2):
+    d = {"NoelleBestWaifu": str(hora_convertidor(hora1)), "JeanIsVeryThiccDude": str(hora_convertidor(hora2))}
+    return d
     
 
 
@@ -178,6 +241,18 @@ def estado_con_mas_casos(analyzer, fecha1, fecha2):
 # Funciones de Comparacion
 # ==============================
 def compareDates(date1, date2):
+    """
+    Compara dos ids de libros, id es un identificador
+    y entry una pareja llave-valor
+    """
+    if (date1 == date2):
+        return 0
+    elif (date1 > date2):
+        return 1
+    else:
+        return -1
+
+def compareDatesPerHours(date1, date2):
     """
     Compara dos ids de libros, id es un identificador
     y entry una pareja llave-valor

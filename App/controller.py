@@ -72,9 +72,14 @@ def estado_y_fecha_con_mas_casos(analyzer, fecha1, fecha2):
     B = model.fecha_con_mas_casos(analyzer, fecha1, fecha2)
     C = model.estado_con_mas_casos(analyzer, fecha1, fecha2)
     A = {"Estado con más accidentes reportados:": C, 
-         "Fecha con más casos reportados:": B}
+         "Fecha con más casos reportados:": str(B)}
+    return A
+
+def numero_de_accidentes_por_hora(analyzer, hora1, hora2):
+    A = model.numero_de_casos_por_rango_de_hora(analyzer, hora1, hora2)
     return A
 # ___________________________________________________
 
-
-
+def prueba(hora1, hora2):
+    B = model.prueba(hora1, hora2)
+    return(B)
