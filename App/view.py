@@ -98,7 +98,9 @@ while True:
         impresor_de_datos_elefante_de_batalla_psiquico_ancestral(Monika)
 
     elif int(inputs[0]) == 4:
-        print("\nRequerimiento No 1 del reto 3: ")
+        fecha = input("\nIngrese una fecha: ")
+        listafechas = controller.accidentes_antes_de_una_fecha(analyzer, fecha)
+        print(listafechas)
 
     elif int(inputs[0]) == 6:
         Fecha1 = input("Fecha inicial:")

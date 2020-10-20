@@ -78,6 +78,10 @@ def estado_y_fecha_con_mas_casos(analyzer, fecha1, fecha2):
 def numero_de_accidentes_por_hora(analyzer, hora1, hora2):
     A = model.numero_de_casos_por_rango_de_hora(analyzer, hora1, hora2)
     return A
+
+def accidentes_antes_de_una_fecha(analyzer, fecha):
+    A = model.accidentes_antes_de_una_fecha(analyzer, fecha)
+    return A
 # ___________________________________________________
 
 def prueba(hora1, hora2):
