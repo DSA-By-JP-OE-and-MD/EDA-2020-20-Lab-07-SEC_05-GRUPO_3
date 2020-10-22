@@ -232,20 +232,18 @@ def prueba(hora1, hora2):
     d = {"NoelleBestWaifu": str(hora_convertidor(hora1)), "JeanIsVeryThiccDude": str(hora_convertidor(hora2))}
     return d
     
-def accidentes_antes_de_una_fecha(analyzer, fecha):
+def total_antes_de_una_fecha(analyzer, fecha):
     date = fecha_convertidor_consultas(fecha)
     a = om.keys(analyzer["index"], om.minKey(analyzer["index"]), date)
-    b = om.get(analyzer["index"], lt.firstElement(a))
-    c = me.getValue(b)
-    e = lt.newList(datastructure="SINGLE_LINKED")
-    d = it.newIterator(b)
-    while it.hasNext(d):
-        n = it.next(d)
-        An = m.get(analyzer["accidentes"], n)
-        Bn = me.getValue(An)
-        lt.addLast(d, Bn)
-    ins.insertionSort(d, lessfunction)
-    return c
+    lt.removeLast(a)
+    total = 0
+    it1 = lit.newIterator(a)
+    while lit.hasNext(it1):
+        n = lit.next(it1)
+        b = om.get(analyzer["index"], n)
+        c = me.getValue(b)
+        total += lt.size(c)
+    return total
 
 
 

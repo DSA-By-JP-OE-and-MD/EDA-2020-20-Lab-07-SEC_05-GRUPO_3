@@ -79,9 +79,13 @@ def numero_de_accidentes_por_hora(analyzer, hora1, hora2):
     A = model.numero_de_casos_por_rango_de_hora(analyzer, hora1, hora2)
     return A
 
-def accidentes_antes_de_una_fecha(analyzer, fecha):
-    A = model.accidentes_antes_de_una_fecha(analyzer, fecha)
-    return A
+def accidentes_antes_de_una_fecha(analyzer, fecha1, fecha2):
+    A = model.total_antes_de_una_fecha(analyzer, fecha2)
+    B = model.fecha_con_mas_casos(analyzer, fecha1, fecha2)
+    fecha = B.strftime("%Y-%m-%d")
+    C = {"Total de accidentes antes de "+ fecha2: A,
+         "Fecha con mas accidentes": fecha}
+    return C
 # ___________________________________________________
 
 def prueba(hora1, hora2):
