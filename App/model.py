@@ -245,8 +245,32 @@ def total_antes_de_una_fecha(analyzer, fecha):
         total += lt.size(c)
     return total
 
+def total_entre_fechas(analyzer, fecha1, fecha2):
+    date1 = fecha_convertidor_consultas(fecha1)
+    date2 = fecha_convertidor_consultas(fecha2)
+    a = om.keys(analyzer["index"], date1, date2)
+    total = 0
+    it1 = lit.newIterator(a)
+    while lit.hasNext(it1):
+        n = lit.next(it1)
+        b = om.get(analyzer["index"], n)
+        c = me.getValue(b)
+        total += lt.size(c)
+    return total
 
-
+def severidad_entre_fechas(analyzer, fecha1, fecha2):
+    index = analyzer["index"]
+    accidentes = analyzer["accidentes"]
+    fecha1 = fecha_convertidor_consultas(fecha1)
+    fecha2 = fecha_convertidor_consultas(fecha2)
+    B = crear_lista_con_criterio(index, accidentes, "Severity", fecha1, fecha2, False)
+    mayorsev = None
+    sevcounter = 0
+    for b in B:
+        if B[b] > sevcounter:
+            sevcounter = B[b]
+            mayorsev = b
+    return mayorsev
 
 # ==============================
 # Funciones de Comparacion

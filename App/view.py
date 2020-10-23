@@ -63,6 +63,7 @@ def printMenu():
     print("2- Cargar información de accidentes")
     print("3- Requerimento 1")
     print("4- Requerimento 2")
+    print("5- Requerimento 3")
     print("6- Requerimento 4")
     print("7- Requerimento 5")
     print("0- Salir")
@@ -99,9 +100,19 @@ while True:
 
     elif int(inputs[0]) == 4:
         fecha1 = str(om.minKey(analyzer["index"]))
-        fecha2 = input("\nIngrese una fecha: ")
+        fecha2 = input("\nIngrese una fecha (YYYY-MM-DD): ")
         listafechas = controller.accidentes_antes_de_una_fecha(analyzer, fecha1, fecha2)
+        print("*******************************************")
         print(listafechas)
+        print("*******************************************")
+
+    elif int(inputs[0]) == 5:
+        fecha1 = input("\nIngrese la primera fecha (YYYY-MM-DD): ")
+        fecha2 = input("\nIngrese la segunda fecha (YYYY-MM-DD): ")
+        listafechas = controller.accidentes_entre_fechas(analyzer, fecha1, fecha2)
+        print("*******************************************")
+        print(listafechas)
+        print("*******************************************")
 
     elif int(inputs[0]) == 6:
         Fecha1 = input("Fecha inicial:")

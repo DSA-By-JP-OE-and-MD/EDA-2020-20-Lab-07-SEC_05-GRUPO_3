@@ -86,6 +86,13 @@ def accidentes_antes_de_una_fecha(analyzer, fecha1, fecha2):
     C = {"Total de accidentes antes de "+ fecha2: A,
          "Fecha con mas accidentes": fecha}
     return C
+
+def accidentes_entre_fechas(analyzer, fecha1, fecha2):
+    A = model.total_entre_fechas(analyzer, fecha1, fecha2)
+    B = model.severidad_entre_fechas(analyzer, fecha1, fecha2)
+    C = {"Total de accidentes entre " + fecha1 + " y "+ fecha2: A,
+         "Severidad mas reportada en el rango": B}
+    return C
 # ___________________________________________________
 
 def prueba(hora1, hora2):
